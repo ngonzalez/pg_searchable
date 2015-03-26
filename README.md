@@ -18,23 +18,7 @@ And then execute:
 
 ```ruby
 rails g cg_searchable:install
-```
-
-Note: Migration will fail if PostgreSQL Search Configurations already
-exist with these names: search_cfg_en, search_cfg_en
-
-You can check if it already exists:
-```
-\dF search_cfg_*
-List of text search configurations
--[ RECORD 1 ]--------------
-Schema      | public
-Name        | search_cfg_en
-Description |
--[ RECORD 2 ]--------------
-Schema      | public
-Name        | search_cfg_fr
-Description |
+rake db:migrate
 ```
 
 ## Contributing
