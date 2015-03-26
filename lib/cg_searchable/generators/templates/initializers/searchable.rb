@@ -65,9 +65,18 @@ module Searchable
       end
     end
 
-    def search keywords=[]
+    def parse_keywords keywords
+      keywords.gsub("\'", " ")
+              .gsub("-", " ")
+              .gsub("_", " ")
+              .gsub(/[^0-9a-z ]/i, '')
+              .split(" ")
+              .join(" & ")
+    end
+
+    def search keywords=""
       self.joins(join_table_names)
-          .where(searchable_fields_conditions(keywords.join(" & ")).join(" OR "))
+          .where(searchable_fields_conditions(parse_keywords(keywords)).join(" OR "))
           .uniq
     end
 
