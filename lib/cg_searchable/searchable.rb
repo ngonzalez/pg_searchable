@@ -75,7 +75,6 @@ module Searchable
     end
 
     def search keywords=""
-      raise "abcd"
       self.joins(join_table_names)
           .where(searchable_fields_conditions(parse_keywords(keywords)).join(" OR "))
           .uniq
