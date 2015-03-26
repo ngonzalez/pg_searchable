@@ -21,6 +21,18 @@ rails g cg_searchable:install
 rake db:migrate
 ```
 
+Then add searchable attributes to models:
+```
+class Item < ActiveRecord::Base
+    searchable :name, localized_items: [:title, :description], taggings: { tag: [:name] }, member: [:name]
+end
+```
+
+You should now be able to search like this:
+```
+Item.search ["this", "is", "a", "test"]
+```
+
 ## Contributing
 
 1. Fork it ( https://github.com/ngonzalez/cg_searchable/fork )
