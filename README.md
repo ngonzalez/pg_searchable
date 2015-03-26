@@ -30,6 +30,7 @@ class Item < ActiveRecord::Base
     has_and_belongs_to_many :tags, join_table :taggings
 
     searchable :name, localized_items: [:title, :description], taggings: { tag: [:name] }, member: [:name]
+
 end
 ```
 
