@@ -18,23 +18,25 @@ And then execute:
 
 ```ruby
 rails g cg_searchable:install
+rake db:migrate
 ```
 
-Note: Migration will fail if PostgreSQL Search Configurations already
-exist with these names: search_cfg_en, search_cfg_en
-
-You can check if it already exists:
+Then add searchable attributes to models:
 ```
-\dF search_cfg_*
-List of text search configurations
--[ RECORD 1 ]--------------
-Schema      | public
-Name        | search_cfg_en
-Description |
--[ RECORD 2 ]--------------
-Schema      | public
-Name        | search_cfg_fr
-Description |
+class Item < ActiveRecord::Base
+
+    belongs_to :member
+    has_many :localized_items # Globalize equivalent
+    has_and_belongs_to_many :tags, join_table :taggings
+
+    searchable :name, localized_items: [:title, :description], taggings: { tag: [:name] }, member: [:name]
+
+end
+```
+
+You should now be able to search like this:
+```
+Item.search ["this", "is", "a", "test"]
 ```
 
 ## Contributing
