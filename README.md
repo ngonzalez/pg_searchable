@@ -36,7 +36,7 @@ end
 
 You should now be able to search like this:
 ```
-Item.search ["this", "is", "a", "test"]
+Item.search "This is a test"
 ```
 
 ## Contributing
