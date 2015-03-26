@@ -24,6 +24,11 @@ rake db:migrate
 Then add searchable attributes to models:
 ```
 class Item < ActiveRecord::Base
+
+    belongs_to :member
+    has_many :localized_items # Globalize equivalent
+    has_and_belongs_to_many :tags, join_table :taggings
+
     searchable :name, localized_items: [:title, :description], taggings: { tag: [:name] }, member: [:name]
 end
 ```
