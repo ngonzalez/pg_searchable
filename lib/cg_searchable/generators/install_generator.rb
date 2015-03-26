@@ -5,10 +5,6 @@ module CgSearchable
     class InstallGenerator < Rails::Generators::Base
       source_root File.expand_path("../templates", __FILE__)
 
-      def copy_initializer
-        template "initializers/searchable.rb", "config/initializers/001_cg_searchable.rb"
-      end
-
       def copy_migrations
         migration_template "migrations/create_pg_search_configurations.rb", "db/migrate/create_pg_search_configurations.rb"
       end
