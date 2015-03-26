@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = CgSearchable::VERSION
   spec.authors       = ["Nicolas Gonzalez"]
   spec.email         = ["nicolasgonzalez180@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{PostgreSQL Search}
+  spec.description   = %q{PostgreSQL Search}
   spec.homepage      = ""
   spec.license       = "MIT"
 
