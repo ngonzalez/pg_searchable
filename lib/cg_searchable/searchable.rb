@@ -22,15 +22,23 @@ module Searchable
       end
     end
 
+    def get_class_name class_name, name
+      if class_name.reflect_on_association(name) && class_name.reflect_on_association(name).options.has_key?(:class_name)
+        class_name.reflect_on_association(name).options[:class_name].classify.constantize
+      else
+        name.to_s.classify.constantize
+      end
+    end
+
     def each_join_table &block
       join_table_field_names.each do |item|
         item.each do |table_name, field_names|
           if field_names.is_a?(Hash)
             field_names.each do |sub_table_name, sub_field_names|
-              yield sub_table_name.to_s.classify.constantize.table_name, sub_field_names if block_given?
+              yield get_class_name(get_class_name(self, table_name), sub_table_name).table_name, sub_field_names if block_given?
             end
           else
-            yield table_name.to_s.classify.constantize.table_name, field_names if block_given?
+            yield get_class_name(self, table_name).table_name, field_names if block_given?
           end
         end
       end
