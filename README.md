@@ -22,7 +22,7 @@ rake db:migrate
 ```
 
 Then add searchable attributes to models:
-```
+```ruby
 class Item < ActiveRecord::Base
 
     belongs_to :member
@@ -35,8 +35,8 @@ end
 ```
 
 You should now be able to search like this:
-```
-Item.search "This is a test"
+```ruby
+Item.search "Example"
 ```
 
 ## Contributing
