@@ -44,9 +44,12 @@ module Searchable
       end
     end
 
+    def search_condition
+      "to_tsvector('search_cfg_#{I18n.locale}', unaccent(%s.%s)) @@ to_tsquery('search_cfg_#{I18n.locale}', '%s')"
+    end
+
     def searchable_fields_conditions keywords
       array = []
-      search_condition = "to_tsvector('search_cfg_#{I18n.locale}', unaccent(%s.%s)) @@ to_tsquery('search_cfg_#{I18n.locale}', '%s')"
       each_field_name do |name|
         array << search_condition % [ self.table_name, name, keywords ]
       end
