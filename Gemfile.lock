@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    cg_searchable (0.0.1)
+    pg_searchable (0.0.1)
 
 GEM
   remote: https://rubygems.org/
@@ -13,5 +13,5 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.7)
-  cg_searchable!
+  pg_searchable!
   rake (~> 10.0)

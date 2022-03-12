@@ -1,10 +1,10 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'cg_searchable/version'
+require 'pg_searchable/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "cg_searchable"
+  spec.name          = "pg_searchable"
   spec.version       = CgSearchable::VERSION
   spec.authors       = ["Nicolas Gonzalez"]
   spec.email         = ["nicolasgonzalez180@gmail.com"]
