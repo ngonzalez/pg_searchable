@@ -45,7 +45,7 @@ module Searchable
     end
 
     def search_condition
-      "to_tsvector('search_cfg_#{I18n.locale}', unaccent(%s.%s)) @@ to_tsquery('search_cfg_#{I18n.locale}', '%s')"
+      "to_tsvector('#{I18n.locale}', unaccent(%s.%s)) @@ to_tsquery('#{I18n.locale}', '%s')"
     end
 
     def searchable_fields_conditions keywords
