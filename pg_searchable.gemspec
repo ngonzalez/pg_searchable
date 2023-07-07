@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = PgSearchable::VERSION
   spec.authors       = ["Nicolas Gonzalez"]
   spec.email         = ["nicolasgonzalez180@gmail.com"]
-  spec.summary       = %q{PostgreSQL Full-Text search}
-  spec.description   = %q{PostgreSQL Full-Text search}
+  spec.summary       = %q{PostgreSQL Full-Text Search}
+  spec.description   = %q{PostgreSQL Full-Text Search}
   spec.homepage      = "https://github.com/ngonzalez/pg_searchable"
   spec.license       = "MIT"
   spec.files         = `git ls-files -z`.split("\x0")

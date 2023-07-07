@@ -44,8 +44,15 @@ module Searchable
       end
     end
 
+    def get_locale
+      case I18n.locale.to_sym
+      when :en then :english
+      when :fr then :french
+      end
+    end
+
     def search_condition
-      "to_tsvector('#{I18n.locale}', unaccent(%s.%s)) @@ to_tsquery('#{I18n.locale}', '%s')"
+      "to_tsvector('#{get_locale}', unaccent(%s.%s)) @@ to_tsquery('#{get_locale}', '%s')"
     end
 
     def searchable_fields_conditions keywords

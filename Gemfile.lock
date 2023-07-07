@@ -1,15 +1,15 @@
 PATH
   remote: .
   specs:
-    pg_searchable (0.1.1)
+    pg_searchable (0.1.2)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    rake (10.4.2)
+    rake (13.0.6)
 
 PLATFORMS
-  ruby
+  x86_64-darwin-22
 
 DEPENDENCIES
   bundler
@@ -17,4 +17,4 @@ DEPENDENCIES
   rake
 
 BUNDLED WITH
-   2.3.9
+   2.5.0.dev

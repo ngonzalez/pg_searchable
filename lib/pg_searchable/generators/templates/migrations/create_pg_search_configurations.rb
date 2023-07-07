@@ -1,7 +1,7 @@
-class CreatePgSearchConfigurations < ActiveRecord::Migration[6.0]
+class CreatePgSearchConfigurations < ActiveRecord::Migration[7.0]
   def change
     ActiveRecord::Base.connection.execute("CREATE EXTENSION IF NOT EXISTS unaccent;")
-    [{ en: "english_stem"}, { fr: "french_stem" }].each do |hash|
+    [{ english: "english_stem"}, { french: "french_stem"}].each do |hash|
       hash.each do |locale, stemmer|
         ActiveRecord::Base.connection.execute("DROP TEXT SEARCH CONFIGURATION IF EXISTS #{locale}")
         ActiveRecord::Base.connection.execute("CREATE TEXT SEARCH CONFIGURATION #{locale} (parser=default);")
