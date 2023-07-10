@@ -1,8 +1,8 @@
-# pg_searchable
+#### pg_searchable
 
 Integrate PostgreSQL Full Text Search to Rails Applications
 
-## Installation
+##### Installation
 
 Add this line to your application's Gemfile:
 
@@ -10,26 +10,17 @@ Add this line to your application's Gemfile:
 gem 'pg_searchable', github: 'ngonzalez/pg_searchable'
 ```
 
-And then execute:
-```shell
-bundle
-```
-
-## Usage
-
+##### Usage
 ```ruby
 rails g pg_searchable:install
-rake db:migrate
 ```
 
-Then add searchable attributes to models:
 ```ruby
 class Item < ActiveRecord::Base
-    searchable :name, items: [:title, :description], taggings: { tag: [:name] }, member: [:name]
+  searchable :name, items: { tag: [:name] }
 end
 ```
 
-You should now be able to search like this:
 ```ruby
 Item.search "Example"
 ```
