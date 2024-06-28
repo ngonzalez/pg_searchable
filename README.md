@@ -16,13 +16,14 @@ rails g pg_searchable:install
 ```
 
 ```ruby
-class Item < ActiveRecord::Base
-  searchable :name, items: { tag: [:name] }
+class Collection < ActiveRecord::Base
+  has_many :books
+  searchable :name, books: { tag: [:name] }
 end
 ```
 
 ```ruby
-Item.search "Example"
+Collection.search "Example"
 ```
 
 ## Contributing
