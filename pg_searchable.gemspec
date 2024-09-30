@@ -6,7 +6,7 @@ require 'pg_searchable/version'
 Gem::Specification.new do |spec|
   spec.name          = "pg_searchable"
   spec.version       = PgSearchable::VERSION
-  spec.authors       = ["Nicolas Gonzalez"]
+  spec.authors       = ["Nicolas GONZALEZ"]
   spec.email         = ["nicolasgonzalez180@gmail.com"]
   spec.summary       = %q{PostgreSQL Full-Text Search}
   spec.description   = %q{PostgreSQL Full-Text Search}
