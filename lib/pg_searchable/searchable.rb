@@ -52,7 +52,7 @@ module Searchable
     end
 
     def search_condition
-      "to_tsvector('#{get_locale}', unaccent(%s.%s)) @@ to_tsquery('#{get_locale}', '%s')"
+      "to_tsvector('#{get_locale}', %s.%s) @@ to_tsquery('#{get_locale}', '%s')"
     end
 
     def searchable_fields_conditions keywords
