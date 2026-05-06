@@ -51,18 +51,20 @@ module Searchable
       end
     end
 
-    def search_condition
+    def text_search_condition
       "to_tsvector('#{get_locale}', %s.%s) @@ to_tsquery('#{get_locale}', '%s')"
     end
 
     def searchable_fields_conditions keywords
       array = []
       each_field_name do |name|
-        array << search_condition % [ self.table_name, name, keywords ]
+        array << text_search_condition % [ self.table_name, name, sanitize_sql_like(keywords) ]
+        array << "#{self.table_name}.#{name} ILIKE '%#{sanitize_sql_like(keywords)}%'"
       end
       each_join_table do |join_table_name, field_names|
         field_names.each do |name|
-          array << search_condition % [ join_table_name, name, keywords ]
+          array << text_search_condition % [ join_table_name, name, sanitize_sql_like(keywords) ]
+          array << "#{join_table_name}.#{name} ILIKE '%#{sanitize_sql_like(keywords)}%'"
         end
       end
       array

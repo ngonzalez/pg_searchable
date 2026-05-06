@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Nicolas GONZALEZ"]
   spec.email         = ["nicolasgonzalez180@gmail.com"]
   spec.summary       = %q{PostgreSQL Full-Text Search}
-  spec.description   = %q{PostgreSQL Full-Text Search}
+  spec.description   = %q{PostgreSQL Full-Text Search helpers for Ruby on Rails.}
   spec.homepage      = "https://github.com/ngonzalez/pg_searchable"
   spec.license       = "MIT"
   spec.files         = `git ls-files -z`.split("\x0")
