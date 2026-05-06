@@ -1,6 +1,6 @@
 #### pg_searchable
 
-Integrate PostgreSQL Full Text Search to Rails Applications
+Search helpers for Ruby on Rails
 
 ##### Installation
 
