@@ -7,7 +7,7 @@ Search helpers for Ruby on Rails
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'pg_searchable', github: 'ngonzalez/pg_searchable'
+gem "pg_searchable", "0.1.5", github: "ngonzalez/pg_searchable"
 ```
 
 ##### Usage
