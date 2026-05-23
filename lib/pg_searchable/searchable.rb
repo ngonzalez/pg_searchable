@@ -9,7 +9,7 @@ module Searchable
     end
 
     def join_table_field_names
-      @searchable_fields.select{|item| item.is_a?(Hash) }
+      @searchable_fields.select { |item| item.is_a?(Hash) }
     end
 
     def field_names
@@ -76,7 +76,7 @@ module Searchable
           item.each do |table_name, field_names|
             array << table_name
             if field_names.is_a?(Hash)
-              field_names.each do |sub_table_name, sub_field_names|
+              field_names.each do |sub_table_name, _sub_field_names|
                 array << { table_name => sub_table_name }
               end
             end

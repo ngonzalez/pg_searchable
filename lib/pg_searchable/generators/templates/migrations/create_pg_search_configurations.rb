@@ -1,4 +1,4 @@
-class CreatePgSearchConfigurations < ActiveRecord::Migration[7.0]
+class CreatePgSearchConfigurations < ActiveRecord::Migration[8.1]
   def change
     [{ english: "english_stem"}, { french: "french_stem"}].each do |hash|
       hash.each do |locale, stemmer|
