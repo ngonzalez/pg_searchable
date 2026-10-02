@@ -7,7 +7,7 @@ Search helpers for Ruby on Rails
 Add this line to your application's Gemfile:
 
 ```ruby
-gem "pg_searchable", "0.1.6", github: "ngonzalez/pg_searchable"
+gem "pg_searchable", "0.1.7", github: "ngonzalez/pg_searchable"
 ```
 
 ##### Usage
@@ -24,6 +24,13 @@ end
 
 ```ruby
 Collection.search "Example"
+```
+
+`search` returns an `ActiveRecord::Relation`, so it can be chained:
+
+```ruby
+Collection.where(published: true).search("Example").order(:name)
+Collection.where(tag: "example").or(Collection.search("Example"))
 ```
 
 ## Contributing

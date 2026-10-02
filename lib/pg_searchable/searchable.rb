@@ -94,10 +94,12 @@ module Searchable
               .join(" & ")
     end
 
+    # Returns a relation (`id IN (subquery)`): it can be chained, ordered and
+    # combined with `or`, and each record is returned once without DISTINCT.
     def search keywords=""
-      self.joins(join_table_names)
-          .where(searchable_fields_conditions(parse_keywords(keywords)).join(" OR "))
-          .uniq
+      where(id: joins(join_table_names)
+                  .where(searchable_fields_conditions(parse_keywords(keywords)).join(" OR "))
+                  .select(:id))
     end
 
   end
