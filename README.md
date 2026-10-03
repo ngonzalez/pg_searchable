@@ -7,7 +7,7 @@ Search helpers for Ruby on Rails
 Add this line to your application's Gemfile:
 
 ```ruby
-gem "pg_searchable", "0.1.7", github: "ngonzalez/pg_searchable"
+gem "pg_searchable", "0.1.8", github: "ngonzalez/pg_searchable"
 ```
 
 ##### Usage
@@ -31,6 +31,19 @@ Collection.search "Example"
 ```ruby
 Collection.where(published: true).search("Example").order(:name)
 Collection.where(tag: "example").or(Collection.search("Example"))
+```
+
+- Keywords match full-text (stemmed, with the `english` or `french` text search configuration for the `en` and `fr` locales, `simple` otherwise) or as a substring.
+- Letters (including accented letters) and digits are kept; blank keywords return no records.
+- Records are found even without matching rows in the joined tables.
+- Subclasses (STI) search with the fields declared on their parent.
+
+##### Tests
+
+The specs use temporary tables in a PostgreSQL database, set with `DATABASE_URL` or the `PG*` environment variables:
+
+```bash
+DATABASE_URL=postgres://localhost/pg_searchable_test bundle exec rspec
 ```
 
 ## Contributing

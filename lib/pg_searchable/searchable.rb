@@ -1,19 +1,22 @@
 module Searchable
   extend ActiveSupport::Concern
 
-  attr_accessor :searchable_fields
+  included do
+    # Inherited by subclasses, so STI models search with their parent's fields
+    class_attribute :searchable_fields, instance_writer: false, default: []
+  end
 
   module ClassMethods
     def searchable *names
-      @searchable_fields = names
+      self.searchable_fields = names
     end
 
     def join_table_field_names
-      @searchable_fields.select { |item| item.is_a?(Hash) }
+      searchable_fields.select { |item| item.is_a?(Hash) }
     end
 
     def field_names
-      @searchable_fields - join_table_field_names
+      searchable_fields - join_table_field_names
     end
 
     def each_field_name &block
@@ -44,34 +47,39 @@ module Searchable
       end
     end
 
+    # Text search configuration for the current locale, `simple` for other locales
     def get_locale
       case I18n.locale.to_sym
       when :en then :english
       when :fr then :french
+      else :simple
       end
     end
 
-    def text_search_condition
-      "to_tsvector('#{get_locale}', %s.%s) @@ to_tsquery('#{get_locale}', '%s')"
+    # Full-text and substring conditions for a column, with bound values
+    def text_search_condition table_name, name, words
+      column = "#{connection.quote_table_name(table_name)}.#{connection.quote_column_name(name)}"
+      sanitize_sql_array([
+        "to_tsvector(?, #{column}) @@ to_tsquery(?, ?) OR #{column} ILIKE ?",
+        get_locale.to_s, get_locale.to_s, words.join(" & "), "%#{sanitize_sql_like(words.join(" "))}%"
+      ])
     end
 
-    def searchable_fields_conditions keywords
+    def searchable_fields_conditions words
       array = []
       each_field_name do |name|
-        array << text_search_condition % [ self.table_name, name, sanitize_sql_like(keywords) ]
-        array << "#{self.table_name}.#{name} ILIKE '%#{sanitize_sql_like(keywords)}%'"
+        array << text_search_condition(self.table_name, name, words)
       end
       each_join_table do |join_table_name, field_names|
         field_names.each do |name|
-          array << text_search_condition % [ join_table_name, name, sanitize_sql_like(keywords) ]
-          array << "#{join_table_name}.#{name} ILIKE '%#{sanitize_sql_like(keywords)}%'"
+          array << text_search_condition(join_table_name, name, words)
         end
       end
       array
     end
 
     def join_table_names
-      @searchable_fields.each_with_object([]) do |item, array|
+      searchable_fields.each_with_object([]) do |item, array|
         if item.is_a?(Hash)
           item.each do |table_name, field_names|
             array << table_name
@@ -85,20 +93,24 @@ module Searchable
       end
     end
 
+    # Words to search: letters (including accented letters) and digits only
+    def search_words keywords
+      keywords.to_s.gsub(/[^[:alnum:]]+/, " ").split(" ")
+    end
+
     def parse_keywords keywords
-      keywords.gsub("\'", " ")
-              .gsub("-", " ")
-              .gsub("_", " ")
-              .gsub(/[^0-9a-z ]/i, '')
-              .split(" ")
-              .join(" & ")
+      search_words(keywords).join(" & ")
     end
 
     # Returns a relation (`id IN (subquery)`): it can be chained, ordered and
     # combined with `or`, and each record is returned once without DISTINCT.
+    # Returns no records for blank keywords.
     def search keywords=""
-      where(id: joins(join_table_names)
-                  .where(searchable_fields_conditions(parse_keywords(keywords)).join(" OR "))
+      words = search_words(keywords)
+      return none if words.empty?
+
+      where(id: left_outer_joins(join_table_names)
+                  .where(searchable_fields_conditions(words).join(" OR "))
                   .select(:id))
     end
 
